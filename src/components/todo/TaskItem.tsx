@@ -1,5 +1,5 @@
 import { useState, useRef } from "react";
-import { Check, Trash2, Palette, GripVertical } from "lucide-react";
+import { Check, Trash2, GripVertical } from "lucide-react";
 import { Task, PALETTE, getTaskColor, CATEGORY_COLORS } from "./types";
 
 interface Props {
