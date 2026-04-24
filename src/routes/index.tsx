@@ -1,26 +1,18 @@
 import { createFileRoute } from "@tanstack/react-router";
+import { TodoApp } from "@/components/todo/TodoApp";
 
 export const Route = createFileRoute("/")({
   component: Index,
+  head: () => ({
+    meta: [
+      { title: "Glass Tasks — A beautiful to-do app" },
+      { name: "description", content: "Organize your day with a glassmorphic to-do list. Categorize, color, drag to reorder — all saved in your browser." },
+      { property: "og:title", content: "Glass Tasks — A beautiful to-do app" },
+      { property: "og:description", content: "A glassmorphic to-do list with categories, custom colors, and drag-and-drop reordering." },
+    ],
+  }),
 });
 
-// IMPORTANT: Replace this placeholder. For sites with multiple pages (About, Services, Contact, etc.),
-// create separate route files (about.tsx, services.tsx, contact.tsx) — don't put all pages in this file.
-function PlaceholderIndex() {
-  return (
-    <div
-      className="flex min-h-screen items-center justify-center"
-      style={{ backgroundColor: "#fcfbf8" }}
-    >
-      <img
-        data-lovable-blank-page-placeholder="REMOVE_THIS"
-        src="https://cdn.gpteng.co/blank-app-v1.svg"
-        alt="Your app will live here!"
-      />
-    </div>
-  );
-}
-
 function Index() {
-  return <PlaceholderIndex />;
+  return <TodoApp />;
 }
