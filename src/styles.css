@@ -209,8 +209,6 @@
 /* Hide scrollbar in webkit while still scrollable */
 .no-scrollbar::-webkit-scrollbar { display: none; }
 .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
-  }
-}
 
 /* Animations */
 @keyframes strike {
