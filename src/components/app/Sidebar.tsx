@@ -1,5 +1,6 @@
 import { Link, useLocation } from "@tanstack/react-router";
 import { CalendarDays, ListTodo, History, Sparkles, Flame } from "lucide-react";
+import { AccountChip } from "@/components/auth/AccountChip";
 
 const items = [
   { to: "/", label: "Today", icon: ListTodo },
@@ -41,10 +42,8 @@ export function Sidebar() {
           );
         })}
       </nav>
-      <div className="mt-auto p-4 text-[11px] text-faint">
-        <div className="rounded-lg p-3 ring-hairline">
-          Stored locally on this device. Your data never leaves your browser.
-        </div>
+      <div className="mt-auto">
+        <AccountChip />
       </div>
     </aside>
   );
