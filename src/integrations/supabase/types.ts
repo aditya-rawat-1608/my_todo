@@ -14,7 +14,125 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      habit_completions: {
+        Row: {
+          created_at: string
+          date: string
+          habit_id: string
+          id: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          date: string
+          habit_id: string
+          id?: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          date?: string
+          habit_id?: string
+          id?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "habit_completions_habit_id_fkey"
+            columns: ["habit_id"]
+            isOneToOne: false
+            referencedRelation: "habits"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      habits: {
+        Row: {
+          color: string
+          created_at: string
+          emoji: string
+          id: string
+          name: string
+          position: number
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          color?: string
+          created_at?: string
+          emoji?: string
+          id?: string
+          name: string
+          position?: number
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          color?: string
+          created_at?: string
+          emoji?: string
+          id?: string
+          name?: string
+          position?: number
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      tasks: {
+        Row: {
+          carried_from: string | null
+          category: string
+          color: string | null
+          completed_at: string | null
+          created_at: string
+          date: string
+          done: boolean
+          end_time: string | null
+          id: string
+          notes: string
+          position: number
+          start_time: string | null
+          text: string
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          carried_from?: string | null
+          category: string
+          color?: string | null
+          completed_at?: string | null
+          created_at?: string
+          date: string
+          done?: boolean
+          end_time?: string | null
+          id?: string
+          notes?: string
+          position?: number
+          start_time?: string | null
+          text: string
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          carried_from?: string | null
+          category?: string
+          color?: string | null
+          completed_at?: string | null
+          created_at?: string
+          date?: string
+          done?: boolean
+          end_time?: string | null
+          id?: string
+          notes?: string
+          position?: number
+          start_time?: string | null
+          text?: string
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
