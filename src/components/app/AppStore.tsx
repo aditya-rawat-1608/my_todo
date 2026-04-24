@@ -200,7 +200,7 @@ export function AppProvider({ children }: { children: ReactNode }) {
     updateTask: (id, patch) => {
       setTasks((p) => p.map((t) => (t.id === id ? { ...t, ...patch } : t)));
       if (cloud) {
-        const dbPatch: Record<string, unknown> = {};
+        const dbPatch: Record<string, string | number | boolean | null | undefined> = {};
         if ("text" in patch) dbPatch.text = patch.text;
         if ("category" in patch) dbPatch.category = patch.category;
         if ("color" in patch) dbPatch.color = patch.color;
@@ -212,7 +212,8 @@ export function AppProvider({ children }: { children: ReactNode }) {
         if ("carriedFrom" in patch) dbPatch.carried_from = patch.carriedFrom;
         if ("completedAt" in patch) dbPatch.completed_at = patch.completedAt ? new Date(patch.completedAt).toISOString() : null;
         if (Object.keys(dbPatch).length > 0) {
-          supabase.from("tasks").update(dbPatch).eq("id", id)
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+          supabase.from("tasks").update(dbPatch as any).eq("id", id)
             .then(({ error }) => { if (error) console.error("update task", error); });
         }
       }
