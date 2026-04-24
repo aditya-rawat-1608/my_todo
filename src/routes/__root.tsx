@@ -2,6 +2,8 @@ import { Outlet, Link, createRootRoute, HeadContent, Scripts } from "@tanstack/r
 import { Toaster } from "@/components/ui/sonner";
 import { AppProvider } from "@/components/app/AppStore";
 import { AppLayout } from "@/components/app/AppLayout";
+import { AuthProvider } from "@/components/auth/AuthProvider";
+import { useLocation } from "@tanstack/react-router";
 
 import appCss from "../styles.css?url";
 
@@ -58,11 +60,22 @@ function RootShell({ children }: { children: React.ReactNode }) {
 
 function RootComponent() {
   return (
-    <AppProvider>
-      <AppLayout>
-        <Outlet />
-      </AppLayout>
-      <Toaster />
-    </AppProvider>
+    <AuthProvider>
+      <AppProvider>
+        <RouteShell />
+        <Toaster />
+      </AppProvider>
+    </AuthProvider>
+  );
+}
+
+function RouteShell() {
+  const { pathname } = useLocation();
+  // Auth page renders without sidebar/layout
+  if (pathname.startsWith("/auth")) return <Outlet />;
+  return (
+    <AppLayout>
+      <Outlet />
+    </AppLayout>
   );
 }
