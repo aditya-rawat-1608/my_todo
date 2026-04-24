@@ -1,7 +1,7 @@
-import { useMemo, useState } from "react";
-import { Plus, Flame, Trash2, Trophy, Check } from "lucide-react";
+import { useMemo } from "react";
+import { Flame, Trash2, Trophy, Check } from "lucide-react";
 import { useApp } from "@/components/app/AppStore";
-import { HABIT_EMOJIS, PALETTE, computeStreak, todayStr } from "@/components/todo/types";
+import { computeStreak, todayStr } from "@/components/todo/types";
 
 function lastNDays(n: number): string[] {
   const out: string[] = [];
@@ -14,20 +14,9 @@ function lastNDays(n: number): string[] {
 }
 
 export function HabitsPage() {
-  const { habits, addHabit, toggleHabit, removeHabit } = useApp();
-  const [name, setName] = useState("");
-  const [emoji, setEmoji] = useState(HABIT_EMOJIS[0]);
-  const [color, setColor] = useState(PALETTE[0]);
+  const { habits, toggleHabit, removeHabit } = useApp();
   const today = todayStr();
   const days = useMemo(() => lastNDays(14), []);
-
-  const submit = (e: React.FormEvent) => {
-    e.preventDefault();
-    const t = name.trim();
-    if (!t) return;
-    addHabit({ name: t, emoji, color });
-    setName("");
-  };
 
   const stats = habits.map((h) => ({ habit: h, ...computeStreak(h.completions, today) }));
   const totalStreak = stats.reduce((s, x) => s + (x.doneToday ? 1 : 0), 0);
@@ -39,35 +28,15 @@ export function HabitsPage() {
         <h1 className="mt-1 text-3xl font-semibold tracking-tight text-foreground">Habit tracker</h1>
         <p className="mt-1 text-soft text-sm">
           {habits.length === 0
-            ? "Build something small, every day. Streaks reward consistency."
+            ? "Build something small, every day. Tap the + button below to add your first habit."
             : `${totalStreak}/${habits.length} done today · keep your fire alive 🔥`}
         </p>
       </header>
 
-      <form onSubmit={submit} className="glass-strong rounded-2xl p-3 mb-6 flex flex-col sm:flex-row gap-2 items-stretch">
-        <select value={emoji} onChange={(e) => setEmoji(e.target.value)}
-          className="glass-input rounded-xl px-3 py-2.5 text-lg outline-none">
-          {HABIT_EMOJIS.map((e) => <option key={e} value={e} className="bg-[var(--surface-2)]">{e}</option>)}
-        </select>
-        <input value={name} onChange={(e) => setName(e.target.value)}
-          placeholder="New habit (e.g. 30-min reading)"
-          className="flex-1 glass-input rounded-xl px-4 py-2.5 text-foreground placeholder:text-faint outline-none focus:ring-2 focus:ring-[var(--primary)]/40" />
-        <div className="flex gap-1 items-center justify-center px-2 glass-input rounded-xl">
-          {PALETTE.slice(0, 6).map((c) => (
-            <button key={c} type="button" onClick={() => setColor(c)}
-              className={`size-5 rounded-full transition-transform ${color === c ? "scale-125 ring-2 ring-foreground" : ""}`}
-              style={{ backgroundColor: c }} aria-label={`Color ${c}`} />
-          ))}
-        </div>
-        <button type="submit" className="rounded-xl px-4 py-2.5 font-medium text-[oklch(0.15_0.02_150)] gradient-primary inline-flex items-center justify-center gap-2 shadow-elegant hover:scale-[1.02] active:scale-95 transition">
-          <Plus className="size-4" /> Add habit
-        </button>
-      </form>
-
       {habits.length === 0 ? (
         <div className="glass rounded-2xl p-10 text-center text-soft">
           <Flame className="mx-auto size-8 text-[var(--accent)] mb-2" />
-          <p>No habits yet. Add one above and start your first streak today.</p>
+          <p>No habits yet. Tap the + button at the bottom to add one and start your first streak today.</p>
         </div>
       ) : (
         <div className="space-y-3">

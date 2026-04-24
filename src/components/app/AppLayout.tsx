@@ -1,5 +1,6 @@
 import { ReactNode } from "react";
 import { Sidebar, MobileTabs } from "./Sidebar";
+import { QuickAddFab } from "@/components/quick-add/QuickAddFab";
 
 export function AppLayout({ children }: { children: ReactNode }) {
   return (
@@ -9,6 +10,7 @@ export function AppLayout({ children }: { children: ReactNode }) {
         {children}
       </main>
       <MobileTabs />
+      <QuickAddFab />
     </div>
   );
 }

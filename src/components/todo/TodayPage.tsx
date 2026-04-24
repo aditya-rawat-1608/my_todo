@@ -1,13 +1,12 @@
 import { useMemo, useState } from "react";
 import { useApp } from "@/components/app/AppStore";
-import { TaskForm } from "./TaskForm";
 import { TaskList } from "./TaskList";
 import { CATEGORIES, Category, formatDateLabel } from "./types";
 
 type Filter = "All" | Category;
 
 export function TodayPage() {
-  const { tasks, hydrated, today, addTask } = useApp();
+  const { tasks, hydrated, today } = useApp();
   const [filter, setFilter] = useState<Filter>("All");
 
   const todays = useMemo(() => tasks.filter((t) => t.date === today), [tasks, today]);
@@ -35,10 +34,6 @@ export function TodayPage() {
           ) : "\u00A0"}
         </p>
       </header>
-
-      <div className="mb-4">
-        <TaskForm onAdd={addTask} defaultDate={today} />
-      </div>
 
       <div className="flex flex-wrap gap-1.5 mb-4 no-scrollbar overflow-x-auto">
         {filters.map((f) => {
